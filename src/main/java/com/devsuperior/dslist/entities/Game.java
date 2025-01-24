@@ -4,30 +4,38 @@ import java.util.Objects;
 
 import jakarta.persistence.*;
 
-@Entity // Usado para configurar a classe java para que ela seja equivalente a tabela do BD
-@Table(name = "tb_game")
+@Entity // Usado para configurar a classe java para que ela seja equivalente a tabela do BD e também faz com que o spring leia essa entidade sem precisar declarar
+@Table(name = "tb_game") // Nome da tabela
 public class Game {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Configurando o ID para ser a chave primária do banco
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Deixando o ID como autoincrement
     private Long id;
     private String title;
 
     @Column(name = "game_year") // Customizando o nome da coluna no banco
     private Integer year;
     private String genre;
+    private String platforms;
+    private Double score;
     private String imgUrl;
-    private String shortDescription;
+
+    @Column(columnDefinition = "TEXT")
+    private String shortDescription; // OBS: O JPA reconhece o camelCase e na criação do banco troca por "_"
+
+    @Column(columnDefinition = "TEXT") // Passando a coluna para TEXT, pois o JPA reconhece como VARCHAR(255) e não caberia o texto todo
     private String longDescription;
 
     public Game() {
     }
 
-    public Game(Long id, String title, Integer year, String genre, String shortDescription, String imgUrl, String longDescription) {
+    public Game(Long id, String title, Integer year, String genre, String platforms, Double score, String shortDescription, String imgUrl, String longDescription) {
         this.id = id;
         this.title = title;
         this.year = year;
         this.genre = genre;
         this.shortDescription = shortDescription;
+        this.platforms = platforms;
+        this.score = score;
         this.imgUrl = imgUrl;
         this.longDescription = longDescription;
     }
@@ -70,6 +78,22 @@ public class Game {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatform(String platforms) {
+        this.platforms = platforms;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public String getShortDescription() {
