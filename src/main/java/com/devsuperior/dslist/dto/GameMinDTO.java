@@ -12,7 +12,7 @@ public class GameMinDTO {
     public GameMinDTO() {
     }
 
-    public GameMinDTO(Game entity) { //Retorna os valores da classe Game;
+    public GameMinDTO(Game entity) { //Retorna os valores da classe Game, usado para customizar o padrão dos dados que serão retornados;
         id = entity.getId();
         title = entity.getTitle();
         year = entity.getYear();
