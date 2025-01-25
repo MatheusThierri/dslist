@@ -2,6 +2,7 @@ package com.devsuperior.dslist.services;
 
 import java.util.List;
 
+import com.devsuperior.dslist.projections.GameMinProjection;
 import com.devsuperior.dslist.repositories.GameRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class GameService {
     @Transactional(readOnly = true)
     public List<GameMinDTO> findAll() {
         List<Game> result = gameRepository.findAll(); // Gera uma consulta no BD para buscar todos os games, automaticamente será converida para uma lista de games;
+        return result.stream().map(x -> new GameMinDTO(x)).toList(); //Transforma uma lista que era de Game para GameMinDTO
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId) {
+        List<GameMinProjection> result = gameRepository.searchByList(listId); // Gera uma consulta no BD para buscar os games de acordo com a consulta SQL, automaticamente será converida para uma lista de games;
         return result.stream().map(x -> new GameMinDTO(x)).toList(); //Transforma uma lista que era de Game para GameMinDTO
     }
 }
